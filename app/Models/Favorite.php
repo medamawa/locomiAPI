@@ -7,7 +7,6 @@ use Ramsey\Uuid\Uuid;
 
 class Favorite extends Model
 {
-    protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -15,7 +14,7 @@ class Favorite extends Model
     {
         parent::__construct($attributes);
 
-        $this->attributes['uuid'] = Uuid::uuid4()->toString();
+        $this->attributes['id'] = Uuid::uuid4()->toString();
     }
     
     public $timestamps = false;

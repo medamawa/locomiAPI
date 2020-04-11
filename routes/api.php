@@ -3,20 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 Route::post('/register', 'JWTAuthController@register')->name('api.jwt.register');
 Route::post('/login', 'JWTAuthController@login')->name('api.jwt.login');
@@ -27,14 +17,19 @@ Route::get('/unauthorized', function() {
     ], 401);
 })->name('api.jwt.unauthorized');
 
+Route::get('/users', 'UsersController@index')->name('api.users.index');
+Route::get('/users/{id}', 'UsersController@show')->name('api.users.show');
+
+
 // ログイン状態
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::resource('/users', 'UsersController', ['only' => ['index', 'show', 'edit', 'update']]);
+    Route::post('/users', 'UsersController@update')->name('api.users.update');
 
     Route::get('/user', 'JWTAuthController@user')->name('api.jwt.user');
     Route::post('/logout', 'JWTAuthController@logout');
     Route::post('/refresh', 'JWTAuthController@refresh');
 
-    Route::post('/users/{user}/follow', 'UsersController@follow')->name('follow');
-    Route::delete('/users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow');
+    Route::post('/follow', 'UsersController@follow')->name('api.follow');
+    Route::get('/follows', 'UsersController@follows')->name('api.follows.index');
+    Route::get('/followers', 'UsersController@followers')->name('api.followers.index');
 });

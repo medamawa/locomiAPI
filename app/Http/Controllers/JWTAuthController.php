@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -17,10 +18,11 @@ class JWTAuthController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'screen_name' => ['required', 'string', 'max:255', 'unique:users'],
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'screen_name' => ['required', 'string', 'max:255', Rule::unique('users')],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')],
             'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'min:8', 'max:255'],
         ]);
@@ -33,7 +35,7 @@ class JWTAuthController extends Controller
         }
 
         $user = new User;
-        $user->fill($request->all());
+        $user->fill($data);
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -45,7 +47,8 @@ class JWTAuthController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'email' => ['required', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'max:255'],
         ]);

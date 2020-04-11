@@ -14,7 +14,7 @@ class CreateComicsTable extends Migration
     public function up()
     {
         Schema::create('comics', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
+            $table->uuid('id')->primary();
             $table->string('user_id')->comment('ユーザーID');
             $table->geometry('location')->comment('位置情報');
             $table->string('text')->comment('本文');
@@ -23,13 +23,13 @@ class CreateComicsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index('uuid');
+            $table->index('id');
             $table->index('user_id');
             $table->spatialIndex('location');
             $table->index('text');
 
             $table->foreign('user_id')
-                ->references('uuid')
+                ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

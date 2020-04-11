@@ -12,7 +12,6 @@ class Comment extends Model
     use SoftDeletes;
     use Notifiable;
 
-    protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -20,7 +19,7 @@ class Comment extends Model
     {
         parent::__construct($attributes);
 
-        $this->attributes['uuid'] = Uuid::uuid4()->toString();
+        $this->attributes['id'] = Uuid::uuid4()->toString();
     }
 
     protected $fillable = [

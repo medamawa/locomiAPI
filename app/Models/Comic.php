@@ -14,7 +14,6 @@ class Comic extends Model
     use Notifiable;
     use HasGeometryAttributes;
 
-    protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -22,7 +21,7 @@ class Comic extends Model
     {
         parent::__construct($attributes);
 
-        $this->attributes['uuid'] = Uuid::uuid4()->toString();
+        $this->attributes['id'] = Uuid::uuid4()->toString();
     }
 
     protected $fillable = [
@@ -33,7 +32,7 @@ class Comic extends Model
     ];
 
     protected $geometries = ['location'];
-    
+
 
     public function user()
     {
