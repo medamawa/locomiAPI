@@ -25,7 +25,7 @@ class CreateComicsTable extends Migration
 
             $table->index('uuid');
             $table->index('user_id');
-            $table->spatialIndex('location');
+            // $table->spatialIndex('location');
             $table->index('text');
 
             $table->foreign('user_id')
