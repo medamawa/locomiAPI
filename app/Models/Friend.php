@@ -21,4 +21,9 @@ class Friend extends Model
 
     public $timestamps = false;
     public $incrementing = false;
+
+    public function followedIds(String $user_id)
+    {
+        return $this->where('following_id', $user_id)->get('followed_id');
+    }
 }

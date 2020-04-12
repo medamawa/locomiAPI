@@ -14,11 +14,11 @@ class CreateFavoritesTable extends Migration
     public function up()
     {
         Schema::create('favorites', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
+            $table->uuid('id')->primary();
             $table->string('user_id')->comment('ユーザーID');
             $table->string('comic_id')->comment('コミックID');
 
-            $table->index('uuid');
+            $table->index('id');
             $table->index('user_id');
             $table->index('comic_id');
 
@@ -28,13 +28,13 @@ class CreateFavoritesTable extends Migration
             ]);
 
             $table->foreign('user_id')
-                ->references('uuid')
+                ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreign('comic_id')
-                ->references('uuid')
+                ->references('id')
                 ->on('comics')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

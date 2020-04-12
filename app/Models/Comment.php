@@ -12,7 +12,6 @@ class Comment extends Model
     use SoftDeletes;
     use Notifiable;
 
-    protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -20,7 +19,7 @@ class Comment extends Model
     {
         parent::__construct($attributes);
 
-        $this->attributes['uuid'] = Uuid::uuid4()->toString();
+        $this->attributes['id'] = Uuid::uuid4()->toString();
     }
 
     protected $fillable = [
@@ -30,5 +29,25 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getComments(String $comic_id)
+    {
+        return $this->with('user')->where('comic_id', $comic_id)->get();
+    }
+
+    public function commentStore(String $user_id, Array $data)
+    {
+        $this->user_id = $user_id;
+        $this->comic_id = $data['comic_id'];
+        $this->text = $data['text'];
+        $this->save();
+
+        return ;
+    }
+
+    public function commentDestroy(String $user_id, String $comment_id)
+    {
+        return $this->where('user_id', $user_id)->where('id', $comment_id)->delete();
     }
 }

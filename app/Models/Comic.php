@@ -14,7 +14,6 @@ class Comic extends Model
     use Notifiable;
     use HasGeometryAttributes;
 
-    protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -22,7 +21,7 @@ class Comic extends Model
     {
         parent::__construct($attributes);
 
-        $this->attributes['uuid'] = Uuid::uuid4()->toString();
+        $this->attributes['id'] = Uuid::uuid4()->toString();
     }
 
     protected $fillable = [
@@ -33,7 +32,7 @@ class Comic extends Model
     ];
 
     protected $geometries = ['location'];
-    
+
 
     public function user()
     {
@@ -48,5 +47,42 @@ class Comic extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getPublicComics()
+    {
+        return $this->get();
+    }
+
+    public function getComic(String $comic_id)
+    {
+        return $this->with('user')->where('id', $comic_id)->first();
+    }
+
+    public function getFollowsComics(String $user_id, Array $follow_ids)
+    {
+        //　ログインユーザーのIDとフォローしているユーザーのIDを結合する
+        $follow_ids[] = $user_id;
+        
+        return $this->whereIn('user_id', $follow_ids)->get();
+    }
+
+    public function comicStore(String $user_id, Array $data)
+    {
+        $this->user_id = $user_id;
+        $this->location = $data['location'];
+        $this->text = $data['text'];
+        if (isset($data['image'])) {
+            $this->image = $data['image'];
+        }
+        $this->release = $data['release'];
+        $this->save();
+
+        return ;
+    }
+
+    public function comicDestroy(String $user_id, String $comic_id)
+    {
+        return $this->where('user_id', $user_id)->where('id', $comic_id)->delete();
     }
 }

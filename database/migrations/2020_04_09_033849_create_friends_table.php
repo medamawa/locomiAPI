@@ -16,9 +16,9 @@ class CreateFriendsTable extends Migration
         Schema::create('friends', function (Blueprint $table) {
             $table->string('following_id')->comment('友達登録しているユーザーID');
             $table->string('followed_id')->comment('友達登録されているユーザーID');
-            $table->boolean('request');
-            $table->boolean('approval');
-            $table->boolean('block');
+            $table->boolean('request')->default((false));
+            $table->boolean('approval')->default(false);
+            $table->boolean('block')->default(false);
 
             $table->index('following_id');
             $table->index('followed_id');
