@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasGeometryAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
@@ -51,7 +52,9 @@ class Comic extends Model
 
     public function getPublicComics()
     {
-        return $this->get();
+        $location = DB::select('SELECT id, user_id, ST_X(location), ST_Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
+        return $location;
+        // return $this->get();
     }
 
     public function getComic(String $comic_id)
