@@ -52,8 +52,11 @@ class Comic extends Model
 
     public function getPublicComics()
     {
-        $location = DB::select('SELECT id, user_id, ST_X(location), ST_Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
+        // GEOMETRY型に対応している時
+        $location = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
         return $location;
+
+        // GEOMETRY型に対応していない時
         // return $this->get();
     }
 
