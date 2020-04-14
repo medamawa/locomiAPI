@@ -28,8 +28,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/users', 'UsersController@update')->name('api.users.update');
 
     Route::get('/user', 'JWTAuthController@user')->name('api.jwt.user');
-    Route::post('/logout', 'JWTAuthController@logout')->name('api.jwt.logout');
-    Route::post('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
+    Route::get('/logout', 'JWTAuthController@logout')->name('api.jwt.logout');
+    Route::get('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
 
     Route::post('/follow', 'UsersController@follow')->name('api.follow');
     Route::get('/follows', 'UsersController@follows')->name('api.follows.index');
