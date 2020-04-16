@@ -7,6 +7,7 @@ use App\Models\Comic;
 use App\Models\Comment;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ComicsRequest;
 
 class ComicsController extends Controller
 {

@@ -8,6 +8,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::prefix('test_run')->group(function() {
+    Route::post('/register', 'RegisterController@register');
+    Route::post('/login', 'LoginController@login');
+    Route::middleware(['jwt_refresh'])->group(function() {
+        Route::post('/refresh-token', 'RefreshTokenController@refreshToken');
+    });
+});
+
 Route::post('/register', 'JWTAuthController@register')->name('api.jwt.register');
 Route::post('/login', 'JWTAuthController@login')->name('api.jwt.login');
 Route::get('/unauthorized', function() {
@@ -23,8 +31,10 @@ Route::get('/users/{id}', 'UsersController@show')->name('api.users.show');
 Route::get('/comics', 'ComicsController@index')->name('api.comics.index');
 Route::get('/comics/{id}', 'ComicsController@show')->name('api.comics.show');
 
+
 // ログイン状態
 Route::group(['middleware' => 'auth:api'], function () {
+
     Route::post('/users', 'UsersController@update')->name('api.users.update');
 
     Route::get('/user', 'JWTAuthController@user')->name('api.jwt.user');

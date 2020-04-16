@@ -12,6 +12,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
+    protected $carbon;
+    protected $now;
     protected $keyType = 'string';
     public $incrementing = false;
 

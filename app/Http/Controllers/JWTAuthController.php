@@ -63,7 +63,10 @@ class JWTAuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'status' => 'error',
+                'messages' => 'Unauthorized',
+            ], 401);
         }
 
         return $this->respondWithToken($token);
@@ -80,7 +83,7 @@ class JWTAuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'logout',
+            'messages' => 'logout',
         ], 200);
     }
 
