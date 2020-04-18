@@ -8,16 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentsController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
+    // コメントを投稿
     public function store(Request $request, Comment $comment)
     {
         $data = $request->all();
@@ -36,7 +27,10 @@ class CommentsController extends Controller
         $user = auth()->user();
         $comment->commentStore($user->id, $data);
 
-        return response()->json(['success' => 'Commented']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Commented'
+            ]);
     }
 
     public function show($id)
@@ -59,6 +53,9 @@ class CommentsController extends Controller
         $user = auth()->user();
         $comment->commentDestroy($user->id, $id);
 
-        return response()->json(['success' => 'Deleted']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Deleted',
+            ]);
     }
 }

@@ -34,9 +34,10 @@ Route::get('/comics/{id}', 'ComicsController@show')->name('api.comics.show');
 
 // ログイン状態
 Route::group(['middleware' => 'auth:api'], function () {
-
+    // updateは保留中
     Route::post('/users', 'UsersController@update')->name('api.users.update');
 
+    // userは消去保留中
     Route::get('/user', 'JWTAuthController@user')->name('api.jwt.user');
     Route::get('/logout', 'JWTAuthController@logout')->name('api.jwt.logout');
     Route::get('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
@@ -45,7 +46,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/follows', 'UsersController@follows')->name('api.follows.index');
     Route::get('/followers', 'UsersController@followers')->name('api.followers.index');
 
-    Route::post('/comic', 'ComicsController@store')->name('api.comic.store');
+    Route::post('/post', 'ComicsController@store')->name('api.comic.store');
     Route::delete('/comic/{id}', 'ComicsController@destroy')->name('api.comic.delete');
 
     Route::post('/comment', 'CommentsController@store')->name('api.comment.store');

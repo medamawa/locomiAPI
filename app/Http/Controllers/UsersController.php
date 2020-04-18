@@ -9,6 +9,7 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    // 全てのユーザーの一覧情報を返す
     public function index(User $user)
     {
         // ログインしていればそのアカウントを除く、そうでなければ全てのアカウントを返す
@@ -18,31 +19,18 @@ class UsersController extends Controller
             $all_users = $user->getAllUsers("");
         }
 
-        return response()->json(['all_users' => $all_users]);
+        return response()->json($all_users);
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
+    // 指定したユーザーの情報を返す
     public function show(User $user, String $id)
     {
         $user = $user->getUser($id);
 
-        return response()->json(['user' => $user]);
+        return response()->json($user);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
+    // ユーザーの情報を編集する（保留中）
     public function update(Request $request, User $user)
     {
         $data = $request->all();
@@ -59,9 +47,13 @@ class UsersController extends Controller
             ], 200);
         }
 
-        $user->updateProfile($data);
+        $data['id'] = $user->id;
 
-        return response()->json(['success' => 'Updated']);
+        $id = $user->updateProfile($data);
+
+        // return response()->json(['success' => 'Updated']);
+        return response()->json(['success' => $id]);
+
     }
 
     public function destroy($id)
@@ -69,6 +61,7 @@ class UsersController extends Controller
         //
     }
 
+    // 指定したユーザーをフォローする
     public function follow(Request $request)
     {
         $data = $request->all();
@@ -89,26 +82,34 @@ class UsersController extends Controller
         $is_following = $user->isFollowing($followed);
         if (!$is_following) {
             $user->follow($followed);
-            return response()->json(['success' => 'Followed']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Followed',
+                ]);
         } else {
             $user->unfollow($followed);
-            return response()->json(['success' => 'Unfollowed']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Unfollowed'
+                ]);
         }
     }
 
+    // ログインしているユーザーがフォローしているユーザーの一覧を返す
     public function follows()
     {
         $user = auth()->user();
         $all_follows = $user->getAllFollows(auth()->user()->id);
 
-        return response()->json(['all_follows' => $all_follows]);
+        return response()->json($all_follows);
     }
 
+    // ログインしているユーザーのフォロワーの一覧を返す
     public function followers()
     {
         $user = auth()->user();
         $all_followers = $user->getAllFollowers(auth()->user()->id);
 
-        return response()->json(['all_followers' => $all_followers]);
+        return response()->json($all_followers);
     }
 }

@@ -125,6 +125,6 @@ class User extends Authenticatable implements JWTSubject
             ]);
         }
         
-        return ;
+        return $this->id;
     }
 }

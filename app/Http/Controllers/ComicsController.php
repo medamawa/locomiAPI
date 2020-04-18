@@ -11,11 +11,12 @@ use App\Http\Requests\ComicsRequest;
 
 class ComicsController extends Controller
 {
+    // 全ての投稿の一覧情報を返す
     public function index(Comic $comic)
     {
         $comics = $comic->getPublicComics();
 
-        return response()->json(['all_public_comics' => $comics]);
+        return response()->json($comics);
         
         // フォローしているアカウントの投稿のみを表示（ログイン時）
         // 
@@ -28,11 +29,7 @@ class ComicsController extends Controller
         // $follows_comics = $comic->getFollowsComics($user->id, $followed_ids);
     }
 
-    public function create()
-    {
-        //
-    }
-
+    // 投稿をする
     public function store(Request $request, Comic $comic)
     {
         $data = $request->all();
@@ -56,13 +53,11 @@ class ComicsController extends Controller
         $data['location'] = $location;
         $comic->comicStore($user->id, $data);
 
-        return response()->json([
-            'success' => 'Comiced',
-            'comic' => $data,
-            ]);
+        return response()->json($data);
     }
 
-    public function show(Comic $comic, Comment $comment,Favorite $favorite, String $id)
+    // 指定した投稿を返す
+    public function show(Comic $comic, Comment $comment, Favorite $favorite, String $id)
     {
         $user = auth()->user();
         $comic = $comic->getComic($id);
@@ -77,16 +72,7 @@ class ComicsController extends Controller
         ]);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+    // 投稿を消去
     public function destroy(Comic $comic, String $id)
     {
         $user = auth()->user();
