@@ -54,8 +54,8 @@ class Comic extends Model
     {
         // GEOMETRY型に対応している時
         // releaseがまだ
-        $location = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
-        return $location;
+        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
+        return $comics;
 
         // GEOMETRY型に対応していない時
         // return $this->get();

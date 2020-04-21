@@ -19,7 +19,7 @@ class CreateComicsTable extends Migration
             $table->geometry('location')->comment('位置情報');
             $table->string('text')->comment('本文');
             $table->string('image')->nullable()->comment('画像');
-            $table->unsignedInteger('release')->comment('公開範囲');
+            $table->integer('release')->comment('公開範囲');
             $table->softDeletes();
             $table->timestamps();
 

@@ -41,7 +41,7 @@ class JWTAuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $user,
+            'messages' => $user,
         ], 200);
     }
 
