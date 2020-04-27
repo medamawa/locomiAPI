@@ -21,7 +21,7 @@ Route::post('/login', 'JWTAuthController@login')->name('api.jwt.login');
 Route::get('/unauthorized', function() {
     return response()->json([
         'status' => 'error',
-        'messages' => 'Unauthorized',
+        'auth_message' => 'Unauthorized',
     ], 401);
 })->name('api.jwt.unauthorized');
 

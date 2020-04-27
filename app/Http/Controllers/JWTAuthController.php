@@ -65,7 +65,7 @@ class JWTAuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json([
                 'status' => 'error',
-                'L_messages' => 'Unauthorized',
+                'auth_message' => 'Unauthorized',
             ], 401);
         }
 
@@ -74,7 +74,7 @@ class JWTAuthController extends Controller
 
     public function user()
     {
-        return response()->json(auth()->user());
+        return response()->json([auth()->user()]);
     }
 
     public function logout()

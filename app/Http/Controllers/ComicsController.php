@@ -53,7 +53,10 @@ class ComicsController extends Controller
         $data['location'] = $location;
         $comic->comicStore($user->id, $data);
 
-        return response()->json($data);
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
+        ]);
     }
 
     // 指定した投稿を返す
