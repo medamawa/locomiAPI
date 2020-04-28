@@ -97,6 +97,7 @@ class JWTAuthController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
+                'id' => auth()->user()->id,
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 60,
