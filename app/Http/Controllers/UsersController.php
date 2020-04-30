@@ -101,7 +101,10 @@ class UsersController extends Controller
         $user = auth()->user();
         $all_follows = $user->getAllFollows(auth()->user()->id);
 
-        return response()->json($all_follows);
+        return response()->json([
+            'status' => 'success',
+            'data' => $all_follows,
+        ]);
     }
 
     // ログインしているユーザーのフォロワーの一覧を返す
