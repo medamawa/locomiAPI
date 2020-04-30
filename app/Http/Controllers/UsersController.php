@@ -113,6 +113,9 @@ class UsersController extends Controller
         $user = auth()->user();
         $all_followers = $user->getAllFollowers(auth()->user()->id);
 
-        return response()->json($all_followers);
+        return response()->json([
+            'status' => 'success',
+            'data' => $all_followers,
+        ]);
     }
 }
