@@ -33,7 +33,7 @@ class Comment extends Model
 
     public function getComments(String $comic_id)
     {
-        return $this->with('user')->where('comic_id', $comic_id)->get();
+        return $this->where('comic_id', $comic_id)->get();
     }
 
     public function commentStore(String $user_id, Array $data)

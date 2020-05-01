@@ -63,7 +63,8 @@ class Comic extends Model
 
     public function getComic(String $comic_id)
     {
-        return $this->with('user')->where('id', $comic_id)->first();
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE id = ?', [$comic_id]);
+        return $comic;
     }
 
     public function getFollowsComics(String $user_id, Array $follow_ids)

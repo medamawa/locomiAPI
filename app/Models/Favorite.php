@@ -44,6 +44,6 @@ class Favorite extends Model
 
     public function getFavorites(String $comic_id)
     {
-        return $this->with('user')->where('comic_id', $comic_id)->get();
+        return $this->where('comic_id', $comic_id)->get();
     }
 }

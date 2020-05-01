@@ -67,11 +67,16 @@ class ComicsController extends Controller
         $comments = $comment->getComments($id);
         $favorites = $favorite->getFavorites($id);
 
-        return response()->json([
+        $data = [
             'user' => $user,
             'comic' => $comic,
             'comments' => $comments,
             'favorites' => $favorites,
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
         ]);
     }
 
