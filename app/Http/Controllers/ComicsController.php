@@ -62,13 +62,11 @@ class ComicsController extends Controller
     // 指定した投稿を返す
     public function show(Comic $comic, Comment $comment, Favorite $favorite, String $id)
     {
-        $user = auth()->user();
         $comic = $comic->getComic($id);
         $comments = $comment->getComments($id);
         $favorites = $favorite->getFavorites($id);
 
         $data = [
-            'user' => $user,
             'comic' => $comic,
             'comments' => $comments,
             'favorites' => $favorites,
