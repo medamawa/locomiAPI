@@ -63,10 +63,16 @@ class FavoritesController extends Controller
         $is_favorite = $favorite->isFavorite($user->id, $comic_id);
         if (!$is_favorite) {
             $favorite->storeFavorite($user->id, $comic_id);
-            return response()->json(['success' => 'Favorited']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Favorited',
+                ]);
         } else {
             $favorite->destroyFavorite($user->id, $comic_id);
-            return response()->json(['success' => 'Unfavorited']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Unfavorited',
+                ]);
         }
     }
 }
