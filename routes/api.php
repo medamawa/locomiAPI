@@ -46,12 +46,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::middleware(['jwt_refresh'])->group(function() {
         Route::post('/refresh-token', 'RefreshTokenController@refreshToken');
     });
-    Route::get('/auth', function() {
-        return response()->json([
-            'status' => 'success',
-            'auth_message' => 'Authorized',
-        ], 401);
-    });
 
     Route::post('/follow', 'UsersController@follow')->name('api.follow');
     Route::get('/follows', 'UsersController@follows')->name('api.follows.index');
