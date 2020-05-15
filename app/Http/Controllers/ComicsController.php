@@ -29,6 +29,14 @@ class ComicsController extends Controller
         // $follows_comics = $comic->getFollowsComics($user->id, $followed_ids);
     }
 
+    // 特定のユーザーの投稿の一覧情報を返す
+    public function index_user(Comic $comic, String $user_id)
+    {
+        $comics = $comic->getUserComics($user_id);
+
+        return response()->json($comics);
+    }
+
     // 投稿をする
     public function store(Request $request, Comic $comic)
     {

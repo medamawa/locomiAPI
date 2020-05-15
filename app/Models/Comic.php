@@ -67,6 +67,12 @@ class Comic extends Model
         return $comic;
     }
 
+    public function getUserComics(String $user_id)
+    {
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE user_id = ?', [$user_id]);
+        return $comic;
+    }
+
     public function getFollowsComics(String $user_id, Array $follow_ids)
     {
         //　ログインユーザーのIDとフォローしているユーザーのIDを結合する
