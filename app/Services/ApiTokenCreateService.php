@@ -25,6 +25,7 @@ class ApiTokenCreateService extends Service
         return response()->json([
             'status' => 'success',
             'data' => [
+                'id' => $this->user->id,
                 'access_token' => $this->createAccessToken(),
                 'refresh_token' => $this->createRefreshToken(),
             ],
