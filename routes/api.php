@@ -28,8 +28,8 @@ Route::get('/unauthorized', function() {
 Route::get('/users', 'UsersController@index')->name('api.users.index');
 Route::get('/users/{id}', 'UsersController@show')->name('api.users.show');
 
-Route::get('/comics', 'ComicsController@index')->name('api.comics.index');
-Route::get('/comics/{id}', 'ComicsController@show')->name('api.comics.show');
+Route::get('/comics/all', 'ComicsController@index')->name('api.comics.index');
+Route::get('/comics/all/{id}', 'ComicsController@show')->name('api.comics.show');
 
 
 // ログイン状態
