@@ -16,8 +16,9 @@ Route::prefix('test_run')->group(function() {
     });
 });
 
-Route::post('/register', 'JWTAuthController@register')->name('api.jwt.register');
-Route::post('/login', 'JWTAuthController@login')->name('api.jwt.login');
+Route::post('/register', 'JWTAuthController@register')->name('api.jwt.register');   // デバッグ用。本番運用では上記の/registerに置き換える
+// Route::post('/login', 'JWTAuthController@login')->name('api.jwt.login');
+Route::post('/login', 'LoginController@login');
 Route::get('/unauthorized', function() {
     return response()->json([
         'status' => 'error',
@@ -41,7 +42,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     // userは消去保留中
     Route::get('/user', 'JWTAuthController@user')->name('api.jwt.user');
     Route::get('/logout', 'JWTAuthController@logout')->name('api.jwt.logout');
-    Route::get('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
+    // Route::get('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
+    Route::middleware(['jwt_refresh'])->group(function() {
+        Route::post('/refresh-token', 'RefreshTokenController@refreshToken');
+    });
+    Route::get('/auth', function() {
+        return response()->json([
+            'status' => 'success',
+            'auth_message' => 'Authorized',
+        ], 401);
+    });
 
     Route::post('/follow', 'UsersController@follow')->name('api.follow');
     Route::get('/follows', 'UsersController@follows')->name('api.follows.index');

@@ -9,9 +9,9 @@ use App\Models\User;
 
 class RefreshTokenController extends Controller
 {
-    private $user;
-    private $user_id;
-    private $access_token;
+    // private $user;
+    // private $user_id;
+    // private $access_token;
 
     public function __construct()
     {
@@ -21,11 +21,16 @@ class RefreshTokenController extends Controller
     // アクセストークンのリフレッシュ
     public function refreshToken()
     {
-        $this->access_token = auth()->refresh();
-        $this->user_id = auth()->user()->id;
-        $this->user = User::where('id', $this->user_id)->first();
+        // $this->access_token = auth()->refresh();
+        // $this->user_id = auth()->user()->id;
+        // $this->user = User::where('id', $this->user_id)->first();
 
-        return $this->respondWithToken();
+        // return $this->respondWithToken();
+
+        $user = auth()->user();
+        $ApiTokenCreateService = new ApiTokenCreateService($user);
+
+        return $ApiTokenCreateService->respondWithToken();
     }
 
     // トークンとユーザー情報のJSONデータを返却

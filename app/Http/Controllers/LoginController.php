@@ -20,7 +20,7 @@ class LoginController extends Controller
         if (!$token = auth()->attempt($data)) {
             return response()->json([
                 'status' => 'error',
-                'messages' => 'Unauthorizated. Invalid Email or Password'
+                'auth_message' => 'Unauthorized',
             ], 401);
         }
         $user = User::where('email', $request->email)->first();

@@ -23,16 +23,11 @@ class ApiTokenCreateService extends Service
     public function respondWithToken()
     {
         return response()->json([
-            'token' => [
+            'status' => 'success',
+            'data' => [
                 'access_token' => $this->createAccessToken(),
                 'refresh_token' => $this->createRefreshToken(),
             ],
-            'profile' => [
-                'id' => $this->user->id,
-                'screen_name' => $this->user->screen_name,
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ]
         ]);
     }
 
