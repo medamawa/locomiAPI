@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/logout', 'JWTAuthController@logout')->name('api.jwt.logout');
     // Route::get('/refresh', 'JWTAuthController@refresh')->name('api.jwt.refresh');
     Route::middleware(['jwt_refresh'])->group(function() {
-        Route::post('/refresh-token', 'RefreshTokenController@refreshToken');
+        Route::get('/refresh-token', 'RefreshTokenController@refreshToken');
     });
 
     Route::post('/follow', 'UsersController@follow')->name('api.follow');
