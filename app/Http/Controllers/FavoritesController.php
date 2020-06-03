@@ -75,4 +75,29 @@ class FavoritesController extends Controller
                 ]);
         }
     }
+
+    public function isFavorite(Request $request, Favorite $favorite)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'comic_id' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'messages' => $validator->errors(),
+            ], 200);
+        }
+
+        $user = auth()->user();
+        $comic_id = $data['comic_id'];
+
+        $is_favorite = $favorite->isFavorite($user->id, $comic_id);
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => $is_favorite,
+        ]);
+    }
 }

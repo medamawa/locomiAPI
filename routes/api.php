@@ -58,4 +58,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/comment/{id}', 'CommentsController@destroy')->name('api.comment.delete');
 
     Route::post('/favorite', 'FavoritesController@favorite')->name('api.favorite');
+    Route::get('/isFavorite', 'FavoriteController@isFavorite')->name('api.isFavorite');
 });
