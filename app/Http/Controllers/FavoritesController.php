@@ -97,7 +97,7 @@ class FavoritesController extends Controller
         
         return response()->json([
             'status' => 'success',
-            'message' => (string) $is_favorite,
+            'isOK' => $is_favorite,
         ]);
     }
 }
