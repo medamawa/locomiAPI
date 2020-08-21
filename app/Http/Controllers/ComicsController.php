@@ -40,20 +40,20 @@ class ComicsController extends Controller
     // 近く(半径１km以内)の投稿を返す
     public function index_near(Request $request, Comic $comic)
     {
-        // $data = $request->all();
-        // $validator = Validator::make($data, [
-        //     'lat' => ['required', 'numeric', 'between:-90,90'],
-        //     'lng' => ['required', 'numeric', 'between:-180,180'],
-        // ]);
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'lat' => ['required', 'numeric', 'between:-90,90'],
+            'lng' => ['required', 'numeric', 'between:-180,180'],
+        ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'messages' => $validator->errors(),
-        //     ], 200);
-        // }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'messages' => $validator->errors(),
+            ], 200);
+        }
 
-        $comics = $comic->getNearComics('34.821413', '135.538147');
+        $comics = $comic->getNearComics($data['lat'], $data['lng']);
 
         return response()->json($comics);
     }
