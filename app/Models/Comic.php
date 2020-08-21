@@ -55,6 +55,7 @@ class Comic extends Model
         // GEOMETRY型に対応している時
         // releaseがまだ
         $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
+        
         return $comics;
 
         // GEOMETRY型に対応していない時
@@ -64,13 +65,22 @@ class Comic extends Model
     public function getComic(String $comic_id)
     {
         $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE id = ?', [$comic_id]);
+        
         return $comic;
     }
 
     public function getUserComics(String $user_id)
     {
         $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE user_id = ?', [$user_id]);
+        
         return $comic;
+    }
+
+    public function getNearComics(String $lat, String $lng)
+    {
+        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE ST_Within(location, ST_Buffer(POINT(?, ?), 0.009))', [$lat, $lng]);
+        
+        return $comics;
     }
 
     public function getFollowsComics(String $user_id, Array $follow_ids)

@@ -32,6 +32,7 @@ Route::get('/users/{id}', 'UsersController@show')->name('api.users.show');
 Route::get('/comics/all', 'ComicsController@index')->name('api.comics.all.index');
 Route::get('/comics/all/{id}', 'ComicsController@show')->name('api.comics.all.show');
 Route::get('/comics/user/{user_id}', 'ComicsController@index_user')->name('api.comics.user.index');
+Route::get('/comics/near', 'ComicsController@index_near')->name('api.comics.near.index');
 
 
 // ログイン状態
