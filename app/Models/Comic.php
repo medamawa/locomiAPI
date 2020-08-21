@@ -52,33 +52,28 @@ class Comic extends Model
 
     public function getPublicComics()
     {
-        // GEOMETRY型に対応している時
-        // releaseがまだ
-        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics');
+        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at, altitude FROM comics');
         
         return $comics;
-
-        // GEOMETRY型に対応していない時
-        // return $this->get();
     }
 
     public function getComic(String $comic_id)
     {
-        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE id = ?', [$comic_id]);
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at, altitude FROM comics WHERE id = ?', [$comic_id]);
         
         return $comic;
     }
 
     public function getUserComics(String $user_id)
     {
-        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE user_id = ?', [$user_id]);
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at, altitude FROM comics WHERE user_id = ?', [$user_id]);
         
         return $comic;
     }
 
     public function getNearComics(String $lat, String $lng)
     {
-        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at, ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) AS distance FROM comics HAVING distance < 1 ORDER BY distance LIMIT 0, 20', [$lat, $lng, $lat]);
+        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at, altitude, ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) AS distance FROM comics HAVING distance < 1 ORDER BY distance LIMIT 0, 20', [$lat, $lng, $lat]);
 
         return $comics;
     }
@@ -100,6 +95,7 @@ class Comic extends Model
             $this->image = $data['image'];
         }
         $this->release = $data['release'];
+        $this->altitude = $data['altitude'];
         $this->save();
 
         return ;

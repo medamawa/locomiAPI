@@ -22,10 +22,10 @@ class CreateComicsTable extends Migration
             $table->integer('release')->comment('公開範囲');
             $table->softDeletes();
             $table->timestamps();
+            // altitude追加済み
 
             $table->index('id');
             $table->index('user_id');
-            // $table->spatialIndex('location');
             $table->index('text');
 
             $table->foreign('user_id')

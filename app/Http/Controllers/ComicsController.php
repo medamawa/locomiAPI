@@ -67,6 +67,7 @@ class ComicsController extends Controller
             'lng' => ['required', 'numeric', 'between:-180,180'],
             'text' => ['required', 'string', 'max:140'],
             'release' => ['required', 'integer'],
+            'altitude' => ['numeric']   // 数値かどうか
         ]);
 
         if ($validator->fails()) {
