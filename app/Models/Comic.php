@@ -79,7 +79,7 @@ class Comic extends Model
     public function getNearComics(String $lat, String $lng)
     {
         // $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, deleted_at, created_at, updated_at FROM comics WHERE ST_Within(location, ST_Buffer(POINT(?, ?), 0.009))', [$lat, $lng]);
-        $comics = DB::select('SELECT id FROM comics HAVING ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) < 3 ORDER BY ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) LIMIT 0, 20', [$lat, $lng, $lat]);
+        $comics = DB::select('SELECT id, ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) AS distance FROM comics HAVING distance < 3 ORDER BY distance LIMIT 0, 20', [$lat, $lng, $lat, $lat, $lng, $lat]);
 
         return $comics;
     }
