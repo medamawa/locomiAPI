@@ -92,7 +92,7 @@ class ComicsController extends Controller
     // 指定した投稿を返す
     public function show(Comic $comic, Comment $comment, Favorite $favorite, String $id)
     {
-        // 消去されていないことを確認
+        // 消去されているかどうか確認
         if(!$this->checkPost($id)) {
             return  response()->json([
                 'status' => 'error',
@@ -120,7 +120,7 @@ class ComicsController extends Controller
     public function destroy(Comic $comic, String $id)
     {
         $user = auth()->user();
-        // 消去されていないことを確認
+        // 消去されているかどうか確認
         if(!$this->checkPost($id)) {
             return  response()->json([
                 'status' => 'error',
@@ -137,7 +137,7 @@ class ComicsController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    
+
     // ** 投稿の検証
     // 1. 投稿IDの投稿が消去されていないか？
     private function checkPost(String $comic_id)
