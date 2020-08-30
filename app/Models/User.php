@@ -67,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
         if ($user_id) {
             return $this->Where('id', '<>', $user_id)->orderBy('screen_name', 'asc')->get();
         } else {
-            return $this->get();
+            return $this->orderBy('screen_name', 'asc')->get();
         }
     }
 

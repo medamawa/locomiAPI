@@ -52,21 +52,21 @@ class Comic extends Model
 
     public function getPublicComics()
     {
-        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL ORDER BY created_at asc');
+        $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL ORDER BY created_at desc');
         
         return $comics;
     }
 
     public function getComic(String $comic_id)
     {
-        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL AND id = ? ORDER BY created_at asc', [$comic_id]);
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL AND id = ? ORDER BY created_at desc', [$comic_id]);
         
         return $comic;
     }
 
     public function getUserComics(String $user_id)
     {
-        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL AND user_id = ? ORDER BY created_at asc', [$user_id]);
+        $comic = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude FROM comics WHERE deleted_at IS NULL AND user_id = ? ORDER BY created_at desc', [$user_id]);
         
         return $comic;
     }
