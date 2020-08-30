@@ -65,7 +65,7 @@ class User extends Authenticatable implements JWTSubject
     {
         // 全てのユーザーを返す、なおログインユーザーは除く
         if ($user_id) {
-            return $this->Where('id', '<>', $user_id)->get();
+            return $this->Where('id', '<>', $user_id)->orderBy('screen_name', 'asc')->get();
         } else {
             return $this->get();
         }
