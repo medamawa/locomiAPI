@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ComicsRequest;
+use Illuminate\Validation\Rules\Exists;
 
 class ComicsController extends Controller
 {
@@ -44,7 +45,7 @@ class ComicsController extends Controller
         $validator = Validator::make($data, [
             'lat' => ['required', 'numeric', 'between:-90,90'],
             'lng' => ['required', 'numeric', 'between:-180,180'],
-            'distance' => ['numeric'],
+            'distance' => ['required', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -54,13 +55,7 @@ class ComicsController extends Controller
             ], 200);
         }
 
-        // 距離があればそれを使う、なければnull
-        $dis = null;
-        if ($data['distance'] != null) {
-            $dis = $data['distance'];
-        }
-
-        $comics = $comic->getNearComics($data['lat'], $data['lng'], $dis);
+        $comics = $comic->getNearComics($data['lat'], $data['lng'], $data['distance']);
 
         return response()->json($comics);
     }
