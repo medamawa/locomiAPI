@@ -71,7 +71,7 @@ class Comic extends Model
         return $comic;
     }
 
-    public function getNearComics(String $lat, String $lng, String $distance = "500")
+    public function getNearComics(String $lat, String $lng, String $distance)
     {
         $dis = $distance / 1000;
         $comics = DB::select('SELECT id, user_id, X(location), Y(location), text, image, created_at, updated_at, altitude, ( 6371 * acos( cos( radians(?) ) * cos( radians( X(location) ) ) * cos( radians( Y(location) ) - radians(?) ) + sin( radians(?) ) * sin( radians( X(location) ) ) ) ) AS distance FROM comics WHERE deleted_at IS NULL HAVING distance < ? ORDER BY distance LIMIT 0, 1000', [$lat, $lng, $lat, $dis]);

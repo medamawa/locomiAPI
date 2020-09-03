@@ -55,7 +55,13 @@ class ComicsController extends Controller
             ], 200);
         }
 
-        $comics = $comic->getNearComics($data['lat'], $data['lng'], $data['distance']);
+        // 距離があればそれを使う、なければnull
+        $dis = 500;
+        if (isset($data['distance'])) {
+            $dis = $data['distance'];
+        }
+
+        $comics = $comic->getNearComics($data['lat'], $data['lng'], $dis);
 
         return response()->json($comics);
     }
