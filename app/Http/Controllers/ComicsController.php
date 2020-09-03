@@ -44,6 +44,7 @@ class ComicsController extends Controller
         $validator = Validator::make($data, [
             'lat' => ['required', 'numeric', 'between:-90,90'],
             'lng' => ['required', 'numeric', 'between:-180,180'],
+            'distance' => ['numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +54,13 @@ class ComicsController extends Controller
             ], 200);
         }
 
-        $comics = $comic->getNearComics($data['lat'], $data['lng']);
+        // 距離があればそれを使う、なければnull
+        $dis = null;
+        if ($data['distance'] != null) {
+            $dis = $data['distance'];
+        }
+
+        $comics = $comic->getNearComics($data['lat'], $data['lng'], $dis);
 
         return response()->json($comics);
     }
